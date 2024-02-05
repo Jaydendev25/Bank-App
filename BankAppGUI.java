@@ -1,15 +1,15 @@
 import javax.swing.JFrame;
 
 public class BankAppGUI {
-    public static String panel = "Login";
-    public static boolean changePanel = false;
+    public volatile static String panel = "Login";
+    public volatile static boolean changePanel = false;
     JFrame frame;
     BankAppGUI() {
        frame = new JFrame();
        frame.add(new BankLogIn());
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        frame.setResizable(false);
-       frame.setTitle("Bank App");
+       frame.setTitle("Banking App Login");
 
        frame.pack();
        frame.setVisible(true);
@@ -19,20 +19,25 @@ public class BankAppGUI {
     }
     public void changePanel() {
         while(true) {
-            System.out.println("t");
+           // System.out.println("sp,et");
             if(changePanel) {
                 switch (panel) {
                     case "Login":
+                        frame.getContentPane().removeAll();
                         frame.add(new BankLogIn());
+                        frame.setTitle("Banking App Login");
                         frame.revalidate();
                         frame.repaint();
                         changePanel = false;
                         break;
                     case "RegisterAccount":
                         frame.getContentPane().removeAll();
+                        frame.add(new RegisterAccount());
+                        frame.setTitle("Banking App Register");
                         frame.revalidate();
                         frame.repaint();
                         changePanel = false;
+                        break;
                 }   
             }
         }

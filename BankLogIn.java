@@ -85,7 +85,6 @@ public class BankLogIn extends JPanel implements ActionListener {
         if(e.getSource() == registerAccount) {
             BankAppGUI.panel = "RegisterAccount";
             BankAppGUI.changePanel = true;
-            System.out.println("aifiw");
         }
     }
     
