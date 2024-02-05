@@ -4,8 +4,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class BankLogIn extends JPanel implements ActionListener {
@@ -46,16 +48,34 @@ public class BankLogIn extends JPanel implements ActionListener {
         password.setLocation(50, 0);
         password.setSize(600, 600);
 
-        JTextField passwordField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
         Font passwordFieldFont = new Font("TimesRoman", Font.PLAIN, 24);
         passwordField.setFont(passwordFieldFont);
-        passwordField.setLocation(50, 160);
+        passwordField.setLocation(50, 310);
         passwordField.setSize(400, 40);
+
+        JButton login = new JButton("Login");
+        Font loginFont = new Font("Helvetica", Font.PLAIN, 32);
+        login.setFont(loginFont);
+        login.setLocation(50, 500);
+        login.setSize(400, 40);
+
+        JButton registerAccount = new JButton("<HTML><U>Don't have an account? Register Here</U></HTML>");
+        Font registerAccountFont = new Font("Helvetica", Font.PLAIN, 18);
+        registerAccount.setForeground(Color.blue);
+        registerAccount.setContentAreaFilled(false);
+        registerAccount.setBorderPainted(false);
+        registerAccount.setFont(registerAccountFont);
+        registerAccount.setLocation(50, 550);
+        registerAccount.setSize(400, 40);
 
         this.add(bankAppTitle);
         this.add(userName);
         this.add(userNameField);
         this.add(password);
+        this.add(passwordField);
+        this.add(login);
+        this.add(registerAccount);
     }
 
     @Override
