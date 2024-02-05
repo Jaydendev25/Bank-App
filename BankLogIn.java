@@ -11,7 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class BankLogIn extends JPanel implements ActionListener {
-
+    JButton login;
+    JButton registerAccount;
     BankLogIn() {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
@@ -54,13 +55,13 @@ public class BankLogIn extends JPanel implements ActionListener {
         passwordField.setLocation(50, 310);
         passwordField.setSize(400, 40);
 
-        JButton login = new JButton("Login");
+        login = new JButton("Login");
         Font loginFont = new Font("Helvetica", Font.PLAIN, 32);
         login.setFont(loginFont);
         login.setLocation(50, 500);
         login.setSize(400, 40);
 
-        JButton registerAccount = new JButton("<HTML><U>Don't have an account? Register Here</U></HTML>");
+        registerAccount = new JButton("<HTML><U>Don't have an account? Register Here</U></HTML>");
         Font registerAccountFont = new Font("Helvetica", Font.PLAIN, 18);
         registerAccount.setForeground(Color.blue);
         registerAccount.setContentAreaFilled(false);
@@ -68,6 +69,7 @@ public class BankLogIn extends JPanel implements ActionListener {
         registerAccount.setFont(registerAccountFont);
         registerAccount.setLocation(50, 550);
         registerAccount.setSize(400, 40);
+        registerAccount.addActionListener(this);
 
         this.add(bankAppTitle);
         this.add(userName);
@@ -80,7 +82,11 @@ public class BankLogIn extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        if(e.getSource() == registerAccount) {
+            BankAppGUI.panel = "RegisterAccount";
+            BankAppGUI.changePanel = true;
+            System.out.println("aifiw");
+        }
     }
     
 
