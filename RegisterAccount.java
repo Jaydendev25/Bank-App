@@ -115,9 +115,9 @@ public class RegisterAccount extends JPanel implements ActionListener{
                     if(userNameField.getText().length() > 0 ) {
                        BankLogIn.accountName = userNameField.getText();
                        BankLogIn.accountPassword = passwordField;
-                       JOptionPane.showMessageDialog(null, "Account Created!");
                        BankAppGUI.panel = "Login";
                        BankAppGUI.changePanel = true;
+                       JOptionPane.showMessageDialog(null, "Account Created!");
                     }
             }
            

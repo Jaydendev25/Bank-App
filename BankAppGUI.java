@@ -19,7 +19,6 @@ public class BankAppGUI {
     }
     public void changePanel() {
         while(true) {
-           // System.out.println("sp,et");
             if(changePanel) {
                 switch (panel) {
                     case "Login":
@@ -34,6 +33,14 @@ public class BankAppGUI {
                         frame.getContentPane().removeAll();
                         frame.add(new RegisterAccount());
                         frame.setTitle("Banking App Register");
+                        frame.revalidate();
+                        frame.repaint();
+                        changePanel = false;
+                        break;
+                    case "MainMenu":
+                        frame.getContentPane().removeAll();
+                        frame.add(new MainMenu());
+                        frame.setTitle("Banking App");
                         frame.revalidate();
                         frame.repaint();
                         changePanel = false;

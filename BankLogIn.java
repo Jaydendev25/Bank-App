@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,6 +17,9 @@ public class BankLogIn extends JPanel implements ActionListener {
     JButton registerAccount;
     public static String accountName = "";
     public static JPasswordField accountPassword;
+    JTextField userNameField;
+    JPasswordField passwordField;
+
     BankLogIn() {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
@@ -38,7 +43,7 @@ public class BankLogIn extends JPanel implements ActionListener {
         userName.setLocation(50, -150);
         userName.setSize(600, 600);
 
-        JTextField userNameField = new JTextField();
+        userNameField = new JTextField();
         Font userNameFieldFont = new Font("TimesRoman", Font.PLAIN, 24);
         userNameField.setFont(userNameFieldFont);
         userNameField.setLocation(50, 160);
@@ -51,7 +56,7 @@ public class BankLogIn extends JPanel implements ActionListener {
         password.setLocation(50, 0);
         password.setSize(600, 600);
 
-        JPasswordField passwordField = new JPasswordField();
+        passwordField = new JPasswordField();
         Font passwordFieldFont = new Font("TimesRoman", Font.PLAIN, 24);
         passwordField.setFont(passwordFieldFont);
         passwordField.setLocation(50, 310);
@@ -62,6 +67,7 @@ public class BankLogIn extends JPanel implements ActionListener {
         login.setFont(loginFont);
         login.setLocation(50, 500);
         login.setSize(400, 40);
+        login.addActionListener(this);
 
         registerAccount = new JButton("<HTML><U>Don't have an account? Register Here</U></HTML>");
         Font registerAccountFont = new Font("Helvetica", Font.PLAIN, 18);
@@ -87,6 +93,13 @@ public class BankLogIn extends JPanel implements ActionListener {
         if(e.getSource() == registerAccount) {
             BankAppGUI.panel = "RegisterAccount";
             BankAppGUI.changePanel = true;
+        }
+        if(BankLogIn.accountName != null && BankLogIn.accountPassword != null
+            && (e.getSource() == login) && (userNameField.getText().equals(accountName))
+            && (Arrays.equals(passwordField.getPassword(), (accountPassword.getPassword())))) {
+                BankAppGUI.panel = "MainMenu";
+                BankAppGUI.changePanel = true;
+
         }
     }
     
