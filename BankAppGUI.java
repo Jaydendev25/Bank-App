@@ -6,7 +6,9 @@ public class BankAppGUI {
     JFrame frame;
     BankAppGUI() {
        frame = new JFrame();
-       frame.add(new BankLogIn());
+       //Testing
+       frame.add(new MainMenu());
+      // frame.add(new BankLogIn());
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        frame.setResizable(false);
        frame.setTitle("Banking App Login");

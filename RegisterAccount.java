@@ -16,7 +16,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
     JPasswordField passwordField;
     JPasswordField retypePasswordField;
     JTextField userNameField;
-    JButton login;
+    JButton register;
     JButton signIn;
     RegisterAccount() {
         this.setLayout(null);
@@ -73,12 +73,12 @@ public class RegisterAccount extends JPanel implements ActionListener{
         retypePasswordField.setLocation(50, 360);
         retypePasswordField.setSize(400, 40);
 
-        login = new JButton("Login");
-        Font loginFont = new Font("Helvetica", Font.PLAIN, 32);
-        login.setFont(loginFont);
-        login.setLocation(50, 500);
-        login.setSize(400, 40);
-        login.addActionListener(this);
+        register = new JButton("Register");
+        Font registerFont = new Font("Helvetica", Font.PLAIN, 32);
+        register.setFont(registerFont);
+        register.setLocation(50, 500);
+        register.setSize(400, 40);
+        register.addActionListener(this);
 
         signIn = new JButton("<HTML><U>Have an account? Sign-in here</U></HTML>");
         Font signInFont = new Font("Helvetica", Font.PLAIN, 18);
@@ -98,7 +98,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
         add(passwordField);
         add(retypePassword);
         add(retypePasswordField);
-        add(login);
+        add(register);
         add(signIn);
     
     }
@@ -109,7 +109,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
             BankAppGUI.panel = "Login";
             BankAppGUI.changePanel = true;
         }
-        if(e.getSource() == login) {
+        if(e.getSource() == register) {
             if((Arrays.equals(passwordField.getPassword(), retypePasswordField.getPassword())) && 
                 (passwordField.getPassword().length > 0 || retypePasswordField.getPassword().length > 0)) {
                     if(userNameField.getText().length() > 0 ) {

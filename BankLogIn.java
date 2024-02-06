@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 public class BankLogIn extends JPanel implements ActionListener {
     JButton login;
     JButton registerAccount;
-    public static String accountName = "";
+    public static String accountName = "Jayden";
     public static JPasswordField accountPassword;
     JTextField userNameField;
     JPasswordField passwordField;
