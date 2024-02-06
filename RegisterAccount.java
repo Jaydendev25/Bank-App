@@ -3,14 +3,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class RegisterAccount extends JPanel implements ActionListener{
+    JPasswordField passwordField;
+    JPasswordField retypePasswordField;
+    JTextField userNameField;
     JButton login;
     JButton signIn;
     RegisterAccount() {
@@ -36,7 +41,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
         userName.setLocation(50, -150);
         userName.setSize(600, 600);
 
-        JTextField userNameField = new JTextField();
+        userNameField = new JTextField();
         Font userNameFieldFont = new Font("TimesRoman", Font.PLAIN, 24);
         userNameField.setFont(userNameFieldFont);
         userNameField.setLocation(50, 160);
@@ -49,7 +54,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
         password.setLocation(50, -50);
         password.setSize(600, 600);
 
-        JPasswordField passwordField = new JPasswordField();
+        passwordField = new JPasswordField();
         Font passwordFieldFont = new Font("TimesRoman", Font.PLAIN, 24);
         passwordField.setFont(passwordFieldFont);
         passwordField.setLocation(50, 260);
@@ -62,7 +67,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
         retypePassword.setLocation(50, 50);
         retypePassword.setSize(600, 600);
 
-        JPasswordField retypePasswordField = new JPasswordField();
+        retypePasswordField = new JPasswordField();
         Font retypePasswordFieldFont = new Font("TimesRoman", Font.PLAIN, 24);
         retypePasswordField.setFont(retypePasswordFieldFont);
         retypePasswordField.setLocation(50, 360);
@@ -73,8 +78,9 @@ public class RegisterAccount extends JPanel implements ActionListener{
         login.setFont(loginFont);
         login.setLocation(50, 500);
         login.setSize(400, 40);
+        login.addActionListener(this);
 
-        signIn = new JButton("<HTML><U>Don't have an account? Register Here</U></HTML>");
+        signIn = new JButton("<HTML><U>Have an account? Sign-in here</U></HTML>");
         Font signInFont = new Font("Helvetica", Font.PLAIN, 18);
         signIn.setForeground(Color.blue);
         signIn.setContentAreaFilled(false);
@@ -102,6 +108,20 @@ public class RegisterAccount extends JPanel implements ActionListener{
         if(e.getSource() == signIn) {
             BankAppGUI.panel = "Login";
             BankAppGUI.changePanel = true;
+        }
+        if(e.getSource() == login) {
+            if((Arrays.equals(passwordField.getPassword(), retypePasswordField.getPassword())) && 
+                (passwordField.getPassword().length > 0 || retypePasswordField.getPassword().length > 0)) {
+                    if(userNameField.getText().length() > 0 ) {
+                       BankLogIn.accountName = userNameField.getText();
+                       BankLogIn.accountPassword = passwordField;
+                       JOptionPane.showMessageDialog(null, "Account Created!");
+                       BankAppGUI.panel = "Login";
+                       BankAppGUI.changePanel = true;
+                    }
+            }
+           
+
         }
     }
 

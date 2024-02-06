@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 public class BankLogIn extends JPanel implements ActionListener {
     JButton login;
     JButton registerAccount;
+    public static String accountName = "";
+    public static JPasswordField accountPassword;
     BankLogIn() {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
