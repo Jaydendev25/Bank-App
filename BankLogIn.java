@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -93,13 +94,16 @@ public class BankLogIn extends JPanel implements ActionListener {
         if(e.getSource() == registerAccount) {
             BankAppGUI.panel = "RegisterAccount";
             BankAppGUI.changePanel = true;
-        }
-        if(BankLogIn.accountName != null && BankLogIn.accountPassword != null
+        } else if(BankLogIn.accountName != null && BankLogIn.accountPassword != null
             && (e.getSource() == login) && (userNameField.getText().equals(accountName))
             && (Arrays.equals(passwordField.getPassword(), (accountPassword.getPassword())))) {
                 BankAppGUI.panel = "MainMenu";
                 BankAppGUI.changePanel = true;
-
+                JOptionPane.showMessageDialog(null, "Login successful!");
+        } else{
+            JOptionPane.showMessageDialog(null, "Login unsuccessful! Try again");
+            userNameField.setText("");
+            passwordField.setText("");
         }
     }
     

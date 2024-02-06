@@ -18,18 +18,18 @@ public class MainMenu extends JPanel {
     }
 
     private void addGUI() {
-        JLabel helloUser = new JLabel();
+        JLabel helloUser = new JLabel("Hello ", SwingConstants.CENTER);
         Font helloUserFont = new Font("Helvetica", Font.BOLD, 20);
         helloUser.setFont(helloUserFont);
         helloUser.setText("Hello " + BankLogIn.accountName);
-        helloUser.setLocation(190, -280);
-        helloUser.setSize(600, 650);
+        helloUser.setLocation(0, 0);
+        helloUser.setSize(460, 50);
 
         JLabel entryText = new JLabel();
         Font entryTextFont = new Font("Helvetica", Font.PLAIN, 16);
         entryText.setFont(entryTextFont);
         entryText.setText("What would you like to do today?");
-        entryText.setLocation(140, -200);
+        entryText.setLocation(130, -200);
         entryText.setSize(500, 550);
 
         JLabel balanceText = new JLabel();

@@ -108,8 +108,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
         if(e.getSource() == signIn) {
             BankAppGUI.panel = "Login";
             BankAppGUI.changePanel = true;
-        }
-        if(e.getSource() == register) {
+        } else if(e.getSource() == register) {
             if((Arrays.equals(passwordField.getPassword(), retypePasswordField.getPassword())) && 
                 (passwordField.getPassword().length > 0 || retypePasswordField.getPassword().length > 0)) {
                     if(userNameField.getText().length() > 0 ) {
@@ -118,7 +117,17 @@ public class RegisterAccount extends JPanel implements ActionListener{
                        BankAppGUI.panel = "Login";
                        BankAppGUI.changePanel = true;
                        JOptionPane.showMessageDialog(null, "Account Created!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please enter a username!");
+                        userNameField.setText("");
+                        passwordField.setText("");
+                        retypePasswordField.setText("");
                     }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Account creation. Please try again");
+                userNameField.setText("");
+                passwordField.setText("");
+                retypePasswordField.setText("");
             }
            
 
