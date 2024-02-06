@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -9,7 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends JPanel implements ActionListener{
+    JButton deposit;
     MainMenu() {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
@@ -47,12 +50,13 @@ public class MainMenu extends JPanel {
         Color borderColor = new Color(173, 216, 230);
         balance.setBorder(BorderFactory.createLineBorder(borderColor));
         
-        JButton deposit = new JButton("Deposit");
+        deposit = new JButton("Deposit");
         Font buttonFont = new Font("Helvetica", Font.BOLD, 18);
         deposit.setFont(buttonFont);
         deposit.setLocation(50, 210);
         deposit.setSize(400, 50);
         deposit.setFocusable(false);
+        deposit.addActionListener(this);
 
         JButton withdraw = new JButton("Withdraw");
         withdraw.setFont(buttonFont);
@@ -87,5 +91,12 @@ public class MainMenu extends JPanel {
         add(pastTransaction);
         add(transfer);
         add(logout);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == deposit) {
+            new DepositFrame();
+        }
     }
 }
