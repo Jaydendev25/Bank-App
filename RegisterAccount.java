@@ -3,6 +3,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -12,17 +16,30 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
 public class RegisterAccount extends JPanel implements ActionListener{
     JPasswordField passwordField;
     JPasswordField retypePasswordField;
     JTextField userNameField;
     JButton register;
     JButton signIn;
+    Connection connection;
     RegisterAccount() {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
 
+        String url = "jdbc:mysql://localhost:3306/javabase";
+        String username = "java";
+        String password = "password";
+
+        System.out.println("Connecting database ...");
+
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         addGUI();
     }
 
@@ -112,11 +129,13 @@ public class RegisterAccount extends JPanel implements ActionListener{
             if((Arrays.equals(passwordField.getPassword(), retypePasswordField.getPassword())) && 
                 (passwordField.getPassword().length > 0 || retypePasswordField.getPassword().length > 0)) {
                     if(userNameField.getText().length() > 0 ) {
-                       BankLogIn.accountName = userNameField.getText();
-                       BankLogIn.accountPassword = passwordField;
-                       BankAppGUI.panel = "Login";
-                       BankAppGUI.changePanel = true;
-                       JOptionPane.showMessageDialog(null, "Account Created!");
+                        createAccount();
+                        
+                        BankLogIn.accountName = userNameField.getText();
+                        BankLogIn.accountPassword = passwordField;
+                        BankAppGUI.panel = "Login";
+                        BankAppGUI.changePanel = true;
+                        JOptionPane.showMessageDialog(null, "Account Created!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Please enter a username!");
                         userNameField.setText("");
@@ -131,6 +150,19 @@ public class RegisterAccount extends JPanel implements ActionListener{
             }
            
 
+        }
+    }
+
+    private void createAccount() {
+        String sql = " insert into users (username, user_password)" + " values (?, ?)";
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(sql);
+            preparedStmt.setString(1, userNameField.getText());
+            preparedStmt.setString(2, new String(passwordField.getPassword()));
+            preparedStmt.execute();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
