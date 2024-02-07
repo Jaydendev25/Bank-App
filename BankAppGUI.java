@@ -8,7 +8,7 @@ public class BankAppGUI {
     BankAppGUI(Server server) {
         this.server = server;
         frame = new JFrame();
-        frame.add(new BankLogIn());
+        frame.add(new BankLogIn(server));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setTitle("Banking App Login");
@@ -25,7 +25,7 @@ public class BankAppGUI {
                 switch (panel) {
                     case "Login":
                         frame.getContentPane().removeAll();
-                        frame.add(new BankLogIn());
+                        frame.add(new BankLogIn(server));
                         frame.setTitle("Banking App Login");
                         frame.revalidate();
                         frame.repaint();

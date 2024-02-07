@@ -3,6 +3,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -12,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
 public class BankLogIn extends JPanel implements ActionListener {
     JButton login;
     JButton registerAccount;
@@ -19,8 +23,9 @@ public class BankLogIn extends JPanel implements ActionListener {
     public static JPasswordField accountPassword;
     JTextField userNameField;
     JPasswordField passwordField;
-
-    BankLogIn() {
+    Server server;
+    BankLogIn(Server server) {
+        this.server = server;
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
@@ -93,9 +98,8 @@ public class BankLogIn extends JPanel implements ActionListener {
         if(e.getSource() == registerAccount) {
             BankAppGUI.panel = "RegisterAccount";
             BankAppGUI.changePanel = true;
-        } else if(BankLogIn.accountName != null && BankLogIn.accountPassword != null
-            && (e.getSource() == login) && (userNameField.getText().equals(accountName))
-            && (Arrays.equals(passwordField.getPassword(), (accountPassword.getPassword())))) {
+        } else if(userNameField.getText().length() > 0 && passwordField.getPassword().length > 0
+            && (e.getSource() == login) && verifyAccountLogin()) {
                 BankAppGUI.panel = "MainMenu";
                 BankAppGUI.changePanel = true;
                 JOptionPane.showMessageDialog(null, "Login successful!");
@@ -106,5 +110,21 @@ public class BankLogIn extends JPanel implements ActionListener {
         }
     }
     
+    private boolean verifyAccountLogin() {
+        String query = "select username, user_password from users where username = ? and user_password = ? ;";
+        PreparedStatement stmt;
+        try {
+            stmt = server.getConnection().prepareStatement(query);
+            stmt.setString(1, userNameField.getText());
+            stmt.setString(2, new String(passwordField.getPassword()));
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
 }
