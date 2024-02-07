@@ -23,23 +23,12 @@ public class RegisterAccount extends JPanel implements ActionListener{
     JTextField userNameField;
     JButton register;
     JButton signIn;
-    Connection connection;
-    RegisterAccount() {
+    Server server;
+    RegisterAccount(Server server) {
+        this.server = server;
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
-
-        String url = "jdbc:mysql://localhost:3306/javabase";
-        String username = "java";
-        String password = "password";
-
-        System.out.println("Connecting database ...");
-
-        try {
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         addGUI();
     }
 
@@ -154,13 +143,13 @@ public class RegisterAccount extends JPanel implements ActionListener{
     }
 
     private void createAccount() {
+        Connection connection = server.getConnection();
         String sql = " insert into users (username, user_password)" + " values (?, ?)";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(sql);
             preparedStmt.setString(1, userNameField.getText());
             preparedStmt.setString(2, new String(passwordField.getPassword()));
             preparedStmt.execute();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

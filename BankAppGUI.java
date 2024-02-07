@@ -4,19 +4,19 @@ public class BankAppGUI {
     public volatile static String panel = "Login";
     public volatile static boolean changePanel = false;
     JFrame frame;
-    BankAppGUI() {
-       frame = new JFrame();
-       //Testing
-      // frame.add(new MainMenu());
-       frame.add(new BankLogIn());
-       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       frame.setResizable(false);
-       frame.setTitle("Banking App Login");
+    Server server;
+    BankAppGUI(Server server) {
+        this.server = server;
+        frame = new JFrame();
+        frame.add(new BankLogIn());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setTitle("Banking App Login");
 
-       frame.pack();
-       frame.setVisible(true);
-       frame.setLocationRelativeTo(null);
-       changePanel();
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        changePanel();
         
     }
     public void changePanel() {
@@ -33,7 +33,7 @@ public class BankAppGUI {
                         break;
                     case "RegisterAccount":
                         frame.getContentPane().removeAll();
-                        frame.add(new RegisterAccount());
+                        frame.add(new RegisterAccount(server));
                         frame.setTitle("Banking App Register");
                         frame.revalidate();
                         frame.repaint();
