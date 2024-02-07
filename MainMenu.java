@@ -23,7 +23,7 @@ public class MainMenu extends JPanel implements ActionListener{
         JLabel helloUser = new JLabel("Hello ", SwingConstants.CENTER);
         Font helloUserFont = new Font("Helvetica", Font.BOLD, 20);
         helloUser.setFont(helloUserFont);
-        helloUser.setText("Hello " + BankLogIn.accountName);
+        helloUser.setText("Hello " );
         helloUser.setLocation(0, 0);
         helloUser.setSize(460, 50);
 
