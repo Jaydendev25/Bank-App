@@ -4,8 +4,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
@@ -141,11 +141,18 @@ public class RegisterAccount extends JPanel implements ActionListener{
 
     private void createAccount() {
         Connection connection = server.getConnection();
-        String sql = " insert into users (username, user_password)" + " values (?, ?)";
+        String query = "select count(userID) from users";
+        String sql = " insert into users (userID, username, user_password)" + " values (?, ?, ?)";
         try {
+            PreparedStatement stmtQuery = connection.prepareStatement(query);
+            ResultSet rs = stmtQuery.executeQuery();
+            rs.next();
+            int userID = rs.getInt(1) + 1;
+
             PreparedStatement preparedStmt = connection.prepareStatement(sql);
-            preparedStmt.setString(1, userNameField.getText());
-            preparedStmt.setString(2, new String(passwordField.getPassword()));
+            preparedStmt.setInt(1, userID);
+            preparedStmt.setString(2, userNameField.getText());
+            preparedStmt.setString(3, new String(passwordField.getPassword()));
             preparedStmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
