@@ -143,6 +143,8 @@ public class RegisterAccount extends JPanel implements ActionListener{
         Connection connection = server.getConnection();
         String query = "select count(userID) from users";
         String sql = " insert into users (userID, username, user_password)" + " values (?, ?, ?)";
+        String queryWalletID = "select count(walletID) from wallet";
+        String createWallet = "insert into wallet (walletID, balance) values (?, ?)";
         try {
             PreparedStatement stmtQuery = connection.prepareStatement(query);
             ResultSet rs = stmtQuery.executeQuery();
@@ -154,6 +156,16 @@ public class RegisterAccount extends JPanel implements ActionListener{
             preparedStmt.setString(2, userNameField.getText());
             preparedStmt.setString(3, new String(passwordField.getPassword()));
             preparedStmt.execute();
+
+            PreparedStatement queryWallet = connection.prepareStatement(queryWalletID);
+            ResultSet walletQueryResult = queryWallet.executeQuery();
+            walletQueryResult.next();
+            int walletID = walletQueryResult.getInt(1) + 1;
+            PreparedStatement walletInsert = connection.prepareStatement(createWallet);
+            walletInsert.setInt(1, walletID);
+            walletInsert.setInt(2, 0);
+            walletInsert.execute();
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

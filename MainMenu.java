@@ -14,7 +14,9 @@ import javax.swing.SwingConstants;
 public class MainMenu extends JPanel implements ActionListener{
     JButton deposit;
     String username;
-    MainMenu(String username) {
+    Server server;
+    MainMenu(String username, Server server) {
+        this.server = server;
         this.username = username;
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
@@ -98,7 +100,7 @@ public class MainMenu extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == deposit) {
-            new DepositFrame();
+            new DepositFrame(server);
         }
     }
 }

@@ -2,8 +2,10 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,11 +13,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class DepositFrame {
+public class DepositFrame implements ActionListener{
     private final int DEPOSIT_PANEL_WIDTH = 450;
     private final int DEPOSIT_PANEL_HEIGHT = 400;
     JPanel depositPanel;
-    DepositFrame() {
+    JButton depositButton;
+    JTextField depositAmount;
+    Server server;
+    DepositFrame(Server server) {
+        this.server = server;
+
         JFrame depositFrame = new JFrame();
         depositPanel = new JPanel();
         depositPanel.setLayout(null);
@@ -45,22 +52,32 @@ public class DepositFrame {
         amountText.setLocation(0, 50);
         amountText.setSize(460, 50);
 
-        JTextField depositAmount = new JTextField();
+        depositAmount = new JTextField();
         depositAmount.setFont(balanceFont);
         depositAmount.setLocation(20, 100);
         depositAmount.setSize(410, 50);
         depositAmount.setForeground(Color.black);
         depositAmount.setHorizontalAlignment(JTextField.CENTER);
 
-        JButton depositButton = new JButton();
+        depositButton = new JButton();
         depositButton.setText("Deposit");
         depositButton.setFont(balanceFont);
         depositButton.setLocation(20, 340);
         depositButton.setSize(410, 50);
+        depositButton.addActionListener(this);
 
         depositPanel.add(balance);
         depositPanel.add(amountText);
         depositPanel.add(depositAmount);
         depositPanel.add(depositButton);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!depositAmount.getText().isEmpty() && e.getSource() == depositButton &&  Float.parseFloat(depositAmount.getText()) != 0) {
+            depositAmount();
+        }
+    }
+    private void depositAmount() {
+        Connection conn = server.getConnection();
     }
 }

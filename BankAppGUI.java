@@ -42,7 +42,7 @@ public class BankAppGUI {
                         break;
                     case "MainMenu":
                         frame.getContentPane().removeAll();
-                        frame.add(new MainMenu(username));
+                        frame.add(new MainMenu(username, server));
                         frame.setTitle("Banking App");
                         frame.revalidate();
                         frame.repaint();
