@@ -5,6 +5,7 @@ public class BankAppGUI {
     public volatile static boolean changePanel = false;
     JFrame frame;
     Server server;
+    static String username;
     BankAppGUI(Server server) {
         this.server = server;
         frame = new JFrame();
@@ -41,7 +42,7 @@ public class BankAppGUI {
                         break;
                     case "MainMenu":
                         frame.getContentPane().removeAll();
-                        frame.add(new MainMenu());
+                        frame.add(new MainMenu(username));
                         frame.setTitle("Banking App");
                         frame.revalidate();
                         frame.repaint();

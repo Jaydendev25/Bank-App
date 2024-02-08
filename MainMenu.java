@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,7 +13,9 @@ import javax.swing.SwingConstants;
 
 public class MainMenu extends JPanel implements ActionListener{
     JButton deposit;
-    MainMenu() {
+    String username;
+    MainMenu(String username) {
+        this.username = username;
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
@@ -23,7 +26,7 @@ public class MainMenu extends JPanel implements ActionListener{
         JLabel helloUser = new JLabel("Hello ", SwingConstants.CENTER);
         Font helloUserFont = new Font("Helvetica", Font.BOLD, 20);
         helloUser.setFont(helloUserFont);
-        helloUser.setText("Hello " );
+        helloUser.setText("Hello " + username);
         helloUser.setLocation(0, 0);
         helloUser.setSize(460, 50);
 

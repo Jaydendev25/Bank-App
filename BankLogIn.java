@@ -21,6 +21,7 @@ public class BankLogIn extends JPanel implements ActionListener {
     JTextField userNameField;
     JPasswordField passwordField;
     Server server;
+    String username;
     BankLogIn(Server server) {
         this.server = server;
         this.setLayout(null);
@@ -99,6 +100,7 @@ public class BankLogIn extends JPanel implements ActionListener {
             && (e.getSource() == login) && verifyAccountLogin()) {
                 BankAppGUI.panel = "MainMenu";
                 BankAppGUI.changePanel = true;
+                BankAppGUI.username = username;
                 JOptionPane.showMessageDialog(null, "Login successful!");
         } else{
             JOptionPane.showMessageDialog(null, "Login unsuccessful! Try again");
@@ -118,6 +120,7 @@ public class BankLogIn extends JPanel implements ActionListener {
             if (!rs.next()) {
                 return false;
             }
+            username = rs.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
