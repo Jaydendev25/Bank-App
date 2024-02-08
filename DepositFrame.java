@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -23,9 +22,11 @@ public class DepositFrame implements ActionListener{
     JButton depositButton;
     JTextField depositAmountField;
     Server server;
+    float userBalance;
+    JLabel balance;
     DepositFrame(Server server) {
         this.server = server;
-
+        this.userBalance = server.updateBalance();
         JFrame depositFrame = new JFrame();
         depositPanel = new JPanel();
         depositPanel.setLayout(null);
@@ -43,10 +44,10 @@ public class DepositFrame implements ActionListener{
         addGUI();
     }
     private void addGUI() {
-        JLabel balance = new JLabel("Balance: ", SwingConstants.CENTER);
+        balance = new JLabel("Balance: ", SwingConstants.CENTER);
         Font balanceFont = new Font("Helvetica", Font.BOLD, 20);
         balance.setFont(balanceFont);
-        balance.setText("Balance: ");
+        balance.setText("Balance: $"+ userBalance);
         balance.setLocation(0, 0);
         balance.setSize(460, 50);
 
@@ -79,6 +80,8 @@ public class DepositFrame implements ActionListener{
         if(!depositAmountField.getText().isEmpty() && e.getSource() == depositButton &&  Float.parseFloat(depositAmountField.getText()) != 0) {
             depositAmount();
             depositAmountField.setText("");
+            userBalance = server.updateBalance();
+            balance.setText("Balance $"+ userBalance);
         }
     }
     private void depositAmount() {

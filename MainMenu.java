@@ -15,6 +15,8 @@ public class MainMenu extends JPanel implements ActionListener{
     JButton deposit;
     String username;
     Server server;
+    float userBalance;
+    JLabel balance;
     MainMenu(String username, Server server) {
         this.server = server;
         this.username = username;
@@ -25,6 +27,7 @@ public class MainMenu extends JPanel implements ActionListener{
     }
 
     private void addGUI() {
+        userBalance = server.updateBalance();
         JLabel helloUser = new JLabel("Hello ", SwingConstants.CENTER);
         Font helloUserFont = new Font("Helvetica", Font.BOLD, 20);
         helloUser.setFont(helloUserFont);
@@ -46,9 +49,9 @@ public class MainMenu extends JPanel implements ActionListener{
         balanceText.setLocation(140, -150);
         balanceText.setSize(500, 550);
 
-        JLabel balance = new JLabel("$0.00",SwingConstants.RIGHT);
+        balance = new JLabel("$0.00",SwingConstants.RIGHT);
         balance.setFont(balanceTextFont);
-       // balance.setText("$0.00");
+        balance.setText("$" + userBalance);
         balance.setLocation(20, 150);
         balance.setSize(460, 50);
         Color borderColor = new Color(173, 216, 230);
@@ -103,4 +106,5 @@ public class MainMenu extends JPanel implements ActionListener{
             new DepositFrame(server);
         }
     }
+
 }
