@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,7 +21,7 @@ public class DepositFrame implements ActionListener{
     private final int DEPOSIT_PANEL_HEIGHT = 400;
     JPanel depositPanel;
     JButton depositButton;
-    JTextField depositAmount;
+    JTextField depositAmountField;
     Server server;
     DepositFrame(Server server) {
         this.server = server;
@@ -52,12 +55,12 @@ public class DepositFrame implements ActionListener{
         amountText.setLocation(0, 50);
         amountText.setSize(460, 50);
 
-        depositAmount = new JTextField();
-        depositAmount.setFont(balanceFont);
-        depositAmount.setLocation(20, 100);
-        depositAmount.setSize(410, 50);
-        depositAmount.setForeground(Color.black);
-        depositAmount.setHorizontalAlignment(JTextField.CENTER);
+        depositAmountField = new JTextField();
+        depositAmountField.setFont(balanceFont);
+        depositAmountField.setLocation(20, 100);
+        depositAmountField.setSize(410, 50);
+        depositAmountField.setForeground(Color.black);
+        depositAmountField.setHorizontalAlignment(JTextField.CENTER);
 
         depositButton = new JButton();
         depositButton.setText("Deposit");
@@ -68,16 +71,26 @@ public class DepositFrame implements ActionListener{
 
         depositPanel.add(balance);
         depositPanel.add(amountText);
-        depositPanel.add(depositAmount);
+        depositPanel.add(depositAmountField);
         depositPanel.add(depositButton);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!depositAmount.getText().isEmpty() && e.getSource() == depositButton &&  Float.parseFloat(depositAmount.getText()) != 0) {
+        if(!depositAmountField.getText().isEmpty() && e.getSource() == depositButton &&  Float.parseFloat(depositAmountField.getText()) != 0) {
             depositAmount();
+            depositAmountField.setText("");
         }
     }
     private void depositAmount() {
         Connection conn = server.getConnection();
+        String updateBalance = "update wallet inner join users on walletID = userid set balance = balance + ? where users.username = ? ;";
+        try {
+           PreparedStatement updateBalanceStmt = conn.prepareStatement(updateBalance);
+           updateBalanceStmt.setFloat(1, Float.parseFloat(depositAmountField.getText()));
+           updateBalanceStmt.setString(2, BankAppGUI.username);
+           updateBalanceStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }   
     }
 }
