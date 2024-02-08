@@ -3,13 +3,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 public class MainMenu extends JPanel implements ActionListener{
     JButton deposit;
@@ -24,7 +23,9 @@ public class MainMenu extends JPanel implements ActionListener{
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
         addGUI();
+        updateUserBalance();
     }
+
 
     private void addGUI() {
         userBalance = server.updateBalance();
@@ -100,6 +101,21 @@ public class MainMenu extends JPanel implements ActionListener{
         add(logout);
     }
 
+    private void updateUserBalance() {
+        int delay = 1000; //milliseconds
+        final Timer timer = new Timer(delay, null);
+        timer.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userBalance = server.updateBalance();
+                balance.setText("$" + userBalance);    
+            }
+            
+        });
+        timer.start();
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == deposit) {

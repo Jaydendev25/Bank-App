@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -82,6 +83,7 @@ public class DepositFrame implements ActionListener{
             depositAmountField.setText("");
             userBalance = server.updateBalance();
             balance.setText("Balance $"+ userBalance);
+            JOptionPane.showMessageDialog(null, "Deposit Successfully!");
         }
     }
     private void depositAmount() {
