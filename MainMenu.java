@@ -16,6 +16,9 @@ public class MainMenu extends JPanel implements ActionListener{
     Server server;
     float userBalance;
     JLabel balance;
+    JButton withdraw;
+    public static final int NEW_FRAME_WIDTH = 450;
+    public static final int NEW_FRAME_HEIGHT = 400;
     MainMenu(String username, Server server) {
         this.server = server;
         this.username = username;
@@ -66,11 +69,12 @@ public class MainMenu extends JPanel implements ActionListener{
         deposit.setFocusable(false);
         deposit.addActionListener(this);
 
-        JButton withdraw = new JButton("Withdraw");
+        withdraw = new JButton("Withdraw");
         withdraw.setFont(buttonFont);
         withdraw.setLocation(50, 280);
         withdraw.setSize(400, 50);
         withdraw.setFocusable(false);
+        withdraw.addActionListener(this);
     
         JButton pastTransaction = new JButton("Past Transaction");
         pastTransaction.setFont(buttonFont);
@@ -120,6 +124,9 @@ public class MainMenu extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == deposit) {
             new DepositFrame(server);
+        }
+        if(e.getSource() == withdraw) {
+            new WithdrawFrame(server);
         }
     }
 

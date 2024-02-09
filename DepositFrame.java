@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class DepositFrame implements ActionListener{
-    private final int DEPOSIT_PANEL_WIDTH = 450;
-    private final int DEPOSIT_PANEL_HEIGHT = 400;
     JPanel depositPanel;
     JButton depositButton;
     JTextField depositAmountField;
@@ -31,7 +29,7 @@ public class DepositFrame implements ActionListener{
         JFrame depositFrame = new JFrame();
         depositPanel = new JPanel();
         depositPanel.setLayout(null);
-        depositPanel.setPreferredSize(new Dimension(DEPOSIT_PANEL_WIDTH, DEPOSIT_PANEL_HEIGHT));
+        depositPanel.setPreferredSize(new Dimension(MainMenu.NEW_FRAME_WIDTH, MainMenu.NEW_FRAME_HEIGHT));
         depositPanel.setBackground(Color.WHITE);
         depositFrame.add(depositPanel);
         depositFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
