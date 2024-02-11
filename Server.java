@@ -39,4 +39,19 @@ public class Server {
         }
         return userBalance;
     }
+    public boolean validUser(String user) {
+        String query = "select username from users where username = ? ;";
+        PreparedStatement checkValidUser;
+        try {
+            checkValidUser = connection.prepareStatement(query);
+            checkValidUser.setString(1, user);
+            ResultSet checkValidUserResult = checkValidUser.executeQuery();
+            if (!checkValidUserResult.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 }
