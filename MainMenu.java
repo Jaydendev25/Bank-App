@@ -17,6 +17,7 @@ public class MainMenu extends JPanel implements ActionListener{
     float userBalance;
     JLabel balance;
     JButton withdraw;
+    JButton transfer;
     public static final int NEW_FRAME_WIDTH = 450;
     public static final int NEW_FRAME_HEIGHT = 400;
     MainMenu(String username, Server server) {
@@ -82,11 +83,12 @@ public class MainMenu extends JPanel implements ActionListener{
         pastTransaction.setSize(400, 50);
         pastTransaction.setFocusable(false);
 
-        JButton transfer = new JButton("Transfer");
+        transfer = new JButton("Transfer");
         transfer.setFont(buttonFont);
         transfer.setLocation(50, 420);
         transfer.setSize(400, 50);
         transfer.setFocusable(false);
+        transfer.addActionListener(this);
 
         JButton logout = new JButton("Logout");
         logout.setFont(buttonFont);
@@ -127,6 +129,9 @@ public class MainMenu extends JPanel implements ActionListener{
         }
         if(e.getSource() == withdraw) {
             new WithdrawFrame(server);
+        }
+        if(e.getSource() == transfer) {
+            new TransferFrame(server);
         }
     }
 
