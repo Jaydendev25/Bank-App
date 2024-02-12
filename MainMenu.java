@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,8 +20,12 @@ public class MainMenu extends JPanel implements ActionListener{
     JButton withdraw;
     JButton transfer;
     JButton pastTransaction;
+    JButton logout;
     public static final int NEW_FRAME_WIDTH = 450;
     public static final int NEW_FRAME_HEIGHT = 400;
+    int delay = 1000; //milliseconds
+    final Timer timer = new Timer(delay, null);
+    
     MainMenu(String username, Server server) {
         this.server = server;
         this.username = username;
@@ -92,11 +97,12 @@ public class MainMenu extends JPanel implements ActionListener{
         transfer.setFocusable(false);
         transfer.addActionListener(this);
 
-        JButton logout = new JButton("Logout");
+        logout = new JButton("Logout");
         logout.setFont(buttonFont);
         logout.setLocation(50, 540);
         logout.setSize(400, 50);
         logout.setFocusable(false);
+        logout.addActionListener(this);
 
         add(helloUser);
         add(entryText);
@@ -110,14 +116,12 @@ public class MainMenu extends JPanel implements ActionListener{
     }
 
     private void updateUserBalance() {
-        int delay = 1000; //milliseconds
-        final Timer timer = new Timer(delay, null);
         timer.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 userBalance = server.updateBalance();
-                balance.setText("$" + userBalance);    
+                balance.setText("$" + userBalance);  
             }
             
         });
@@ -137,6 +141,12 @@ public class MainMenu extends JPanel implements ActionListener{
         }
         if(e.getSource() == pastTransaction) {
             new TransactionFrame(server);
+        }
+        if(e.getSource() == logout) {
+            BankAppGUI.panel = "Login";
+            BankAppGUI.username = "";
+            BankAppGUI.changePanel = true;
+            timer.stop();
         }
     }
 

@@ -183,7 +183,6 @@ public class TransactionFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         } 
-        System.out.println(date[0]);
     }
     private void fillType() {
         Connection conn = server.getConnection();
