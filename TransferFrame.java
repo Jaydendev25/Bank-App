@@ -3,10 +3,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -86,8 +90,44 @@ public class TransferFrame implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == transferButton && server.validUser(transferUserField.getText())) {
-            
+        float amountEntered = Float.parseFloat(transferAmountField.getText());
+        if(e.getSource() == transferButton && amountEntered > userBalance) {
+            JOptionPane.showMessageDialog(null, "You do not have the required funds");
+            transferAmountField.setText("");
+            transferUserField.setText("");
+        } else if(e.getSource() == transferButton && transferUserField.getText().equals(BankAppGUI.username)) {
+            JOptionPane.showMessageDialog(null, "You can not transfer to yourself");
+            transferAmountField.setText("");
+            transferUserField.setText("");
+        } else if(e.getSource() == transferButton && server.validUser(transferUserField.getText()) && amountEntered != 0) {
+            transferFunds();
+            userBalance = server.updateBalance();
+            server.addTransaction("Transfer", amountEntered);
+            balance.setText("Balance $"+ userBalance);
+            transferAmountField.setText("");
+            transferUserField.setText("");
+            JOptionPane.showMessageDialog(null, "Transfer successful");
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid user. Try again");
+            transferAmountField.setText("");
+            transferUserField.setText("");
+        }
+    }
+    private void transferFunds() {
+        Connection conn = server.getConnection();
+        String removeFunds = "update wallet inner join users on walletID = userid set balance = balance - ? where users.username = ? ;";
+        String addFunds = "update wallet inner join users on walletID = userid set balance = balance + ? where users.username = ? ;";
+         try {
+           PreparedStatement removeFundsStmt = conn.prepareStatement(removeFunds);
+           removeFundsStmt.setFloat(1, Float.parseFloat(transferAmountField.getText()));
+           removeFundsStmt.setString(2, BankAppGUI.username);
+           removeFundsStmt.execute();
+           PreparedStatement addFundsStmt = conn.prepareStatement(addFunds);
+           addFundsStmt.setFloat(1, Float.parseFloat(transferAmountField.getText()));
+           addFundsStmt.setString(2, transferUserField.getText());
+           addFundsStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

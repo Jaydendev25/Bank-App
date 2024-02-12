@@ -54,6 +54,7 @@ public class Server {
         }
         return true;
     }
+
     public void addTransaction(String type, float amount) {
         String insert = " insert into user_transaction (transactionID, transaction_type, transaction_date, transaction_amount)" 
                 + " values (?, ?, CURRENT_DATE, ?)";
