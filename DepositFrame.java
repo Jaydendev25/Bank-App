@@ -76,10 +76,12 @@ public class DepositFrame implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!depositAmountField.getText().isEmpty() && e.getSource() == depositButton &&  Float.parseFloat(depositAmountField.getText()) != 0) {
+        float amountEntered = Float.parseFloat(depositAmountField.getText());
+        if(!depositAmountField.getText().isEmpty() && e.getSource() == depositButton &&  amountEntered != 0) {
             depositAmount();
             depositAmountField.setText("");
             userBalance = server.updateBalance();
+            server.addTransaction("Deposit", amountEntered);
             balance.setText("Balance $"+ userBalance);
             JOptionPane.showMessageDialog(null, "Deposit Successfully!");
         }

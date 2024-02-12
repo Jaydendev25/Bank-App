@@ -54,4 +54,24 @@ public class Server {
         }
         return true;
     }
+    public void addTransaction(String type, float amount) {
+        String insert = " insert into user_transaction (transactionID, transaction_type, transaction_date, transaction_amount)" 
+                + " values (?, ?, CURRENT_DATE, ?)";
+        String idQuery = "select count(transactionID) from user_transaction";
+        try {
+            PreparedStatement stmtQuery = connection.prepareStatement(idQuery);
+            ResultSet rs = stmtQuery.executeQuery();
+            rs.next();
+            int transactionID = rs.getInt(1) + 1;
+
+            PreparedStatement insertStmt = connection.prepareStatement(insert);
+            insertStmt.setInt(1, transactionID);
+            insertStmt.setString(2, type);
+            insertStmt.setFloat(3, amount);
+            insertStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
 }

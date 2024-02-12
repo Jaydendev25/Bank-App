@@ -75,14 +75,16 @@ public class WithdrawFrame implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == withdrawButton && Float.valueOf(withdrawAmountField.getText()) > userBalance) {
+        float amountEntered = Float.parseFloat(withdrawAmountField.getText());
+        if(e.getSource() == withdrawButton && amountEntered > userBalance) {
             withdrawAmountField.setText("");
             JOptionPane.showMessageDialog(null, "You do not have the required funds");
         }
-        if(!withdrawAmountField.getText().isEmpty() && e.getSource() == withdrawButton &&  Float.parseFloat(withdrawAmountField.getText()) != 0) {
+        if(!withdrawAmountField.getText().isEmpty() && e.getSource() == withdrawButton &&  amountEntered != 0) {
             withdrawAmount();
             withdrawAmountField.setText("");
             userBalance = server.updateBalance();
+            server.addTransaction("Withdraw", amountEntered);
             balance.setText("Balance $"+ userBalance);
             JOptionPane.showMessageDialog(null, "Withdraw Successfully!");
         }
