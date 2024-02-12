@@ -34,6 +34,9 @@ public class TransactionFrame {
         transactionFrame.pack();
         transactionFrame.setVisible(true);
         transactionFrame.setLocationRelativeTo(null);
+        
+        fillDate();
+        fillType();
         fillAmount();
 
         addGUI();
@@ -65,14 +68,43 @@ public class TransactionFrame {
         transferPanal.add(frameFour);
     }
     private void fillDate() {
-
+        Connection conn = server.getConnection();
+        String sqlQuery = "select transaction_date from user_transaction where userId = " + server.getUserID() 
+                + " order by transaction_date DESC limit 4;";
+        try {
+            PreparedStatement queryStmt = conn.prepareStatement(sqlQuery);
+            ResultSet rs = queryStmt.executeQuery();
+            rs.next();
+            for(int i = 0; i < historyDisplay; i++) {
+                date[i] = rs.getDate(1);
+                rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        System.out.println(date[2]);
     }
     private void fillType() {
+        Connection conn = server.getConnection();
+        String sqlQuery = "select transaction_type from user_transaction where userId = " + server.getUserID() 
+                + " order by transaction_date DESC limit 4;";
+        try {
+            PreparedStatement queryStmt = conn.prepareStatement(sqlQuery);
+            ResultSet rs = queryStmt.executeQuery();
+            rs.next();
+            for(int i = 0; i < historyDisplay; i++) {
+                type[i] = rs.getString(1);
+                rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
     }
     private void fillAmount() {
         Connection conn = server.getConnection();
-        String sqlQuery = "select transaction_amount from user_transaction order by transaction_date DESC limit 4;";
+        String sqlQuery = "select transaction_amount from user_transaction where userId = " + server.getUserID() 
+                + " order by transaction_date DESC limit 4;";
         try {
             PreparedStatement queryStmt = conn.prepareStatement(sqlQuery);
             ResultSet rs = queryStmt.executeQuery();
@@ -84,7 +116,5 @@ public class TransactionFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
     }
 }

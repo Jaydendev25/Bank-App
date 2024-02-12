@@ -54,19 +54,28 @@ public class Server {
         }
         return true;
     }
-
-    public void addTransaction(String type, float amount) {
-        String insert = " insert into user_transaction (transactionID, transaction_type, transaction_date, transaction_amount, userID)" 
-                + " values (?, ?, NOW(), ?, ?)";
-        String idQuery = "select count(transactionID) from user_transaction";
+    public int getUserID() {
         String getUserID = "select userId from users where username = ?;";
+        int userID = 0;
         try {
             PreparedStatement getUserIDStmt = connection.prepareStatement(getUserID);
             getUserIDStmt.setString(1, BankAppGUI.username);
             ResultSet getUserIDResult = getUserIDStmt.executeQuery();
             getUserIDResult.next();
-            int userID = getUserIDResult.getInt(1);
+            userID = getUserIDResult.getInt(1);
             
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userID;
+    }
+
+    public void addTransaction(String type, float amount) {
+        String insert = " insert into user_transaction (transactionID, transaction_type, transaction_date, transaction_amount, userID)" 
+                + " values (?, ?, NOW(), ?, ?)";
+        String idQuery = "select count(transactionID) from user_transaction";
+        try {
+
             PreparedStatement stmtQuery = connection.prepareStatement(idQuery);
             ResultSet rs = stmtQuery.executeQuery();
             rs.next();
@@ -76,7 +85,7 @@ public class Server {
             insertStmt.setInt(1, transactionID);
             insertStmt.setString(2, type);
             insertStmt.setFloat(3, amount);
-            insertStmt.setInt(4, userID);
+            insertStmt.setInt(4, this.getUserID());
             insertStmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
