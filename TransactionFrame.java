@@ -15,12 +15,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class TransactionFrame {
-    int historyDisplay = 4;
+    int historyDisplayLimit = 4;
     Server server;
     JPanel transferPanal;
-    Date date[] = new Date[historyDisplay];
-    String type[] = new String[historyDisplay];
-    float amount[] = new float[historyDisplay];
+    Date date[] = new Date[historyDisplayLimit];
+    String type[] = new String[historyDisplayLimit];
+    float amount[] = new float[historyDisplayLimit];
+    
     TransactionFrame(Server server) {
         this.server = server;
 
@@ -168,6 +169,7 @@ public class TransactionFrame {
         transferPanal.add(frameFourDate);
         transferPanal.add(frameFourAmount);
     }
+
     private void fillDate() {
         Connection conn = server.getConnection();
         String sqlQuery = "select transaction_date from user_transaction where userId = " + server.getUserID() 
@@ -176,7 +178,7 @@ public class TransactionFrame {
             PreparedStatement queryStmt = conn.prepareStatement(sqlQuery);
             ResultSet rs = queryStmt.executeQuery();
             rs.next();
-            for(int i = 0; i < historyDisplay; i++) {
+            for(int i = 0; i < historyDisplayLimit; i++) {
                 date[i] = rs.getDate(1);
                 rs.next();
             }
@@ -192,7 +194,7 @@ public class TransactionFrame {
             PreparedStatement queryStmt = conn.prepareStatement(sqlQuery);
             ResultSet rs = queryStmt.executeQuery();
             rs.next();
-            for(int i = 0; i < historyDisplay; i++) {
+            for(int i = 0; i < historyDisplayLimit; i++) {
                 type[i] = rs.getString(1);
                 rs.next();
             }
@@ -209,7 +211,7 @@ public class TransactionFrame {
             PreparedStatement queryStmt = conn.prepareStatement(sqlQuery);
             ResultSet rs = queryStmt.executeQuery();
             rs.next();
-            for(int i = 0; i < historyDisplay; i++) {
+            for(int i = 0; i < historyDisplayLimit; i++) {
                 amount[i] = rs.getFloat(1);
                 rs.next();
             }

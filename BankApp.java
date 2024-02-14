@@ -5,6 +5,5 @@ public class BankApp {
     public static void main(String[] args) {
         Server server = new Server();
         new BankAppGUI(server);
-
     }
 }
