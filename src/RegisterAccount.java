@@ -1,3 +1,4 @@
+package src;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,6 +30,7 @@ public class RegisterAccount extends JPanel implements ActionListener{
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
+        
         addGUI();
     }
 

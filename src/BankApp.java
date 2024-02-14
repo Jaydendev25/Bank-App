@@ -1,3 +1,4 @@
+package src;
 
 public class BankApp {
     public static final int PANEL_WIDTH = 500;

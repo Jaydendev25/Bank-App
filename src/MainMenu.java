@@ -1,3 +1,4 @@
+package src;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,6 +13,9 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 public class MainMenu extends JPanel implements ActionListener{
+    public static final int NEW_FRAME_WIDTH = 450;
+    public static final int NEW_FRAME_HEIGHT = 400;
+    
     JButton deposit;
     String username;
     Server server;
@@ -21,8 +25,6 @@ public class MainMenu extends JPanel implements ActionListener{
     JButton transfer;
     JButton pastTransaction;
     JButton logout;
-    public static final int NEW_FRAME_WIDTH = 450;
-    public static final int NEW_FRAME_HEIGHT = 400;
     int delay = 1000; //milliseconds
     final Timer timer = new Timer(delay, null);
     
@@ -32,6 +34,7 @@ public class MainMenu extends JPanel implements ActionListener{
         this.setLayout(null);
         this.setPreferredSize(new Dimension(BankApp.PANEL_WIDTH, BankApp.PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
+        
         addGUI();
         updateUserBalance();
     }
