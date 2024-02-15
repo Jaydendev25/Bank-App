@@ -22,3 +22,6 @@ create table user_transaction (
     PRIMARY KEY(transactionID),
     FOREIGN KEY(userID) REFERENCES users(userID)
 );
+
+CREATE USER 'java'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON javabase.* TO 'java'@'localhost';
